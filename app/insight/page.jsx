@@ -14,6 +14,7 @@ export default function CVInsight() {
   const [error, setError] = useState(null);
   const [showButton, setShowButton] = useState(false);
 
+
   const router = useRouter();
   const { data: session, status } = useSession();
 
@@ -148,7 +149,7 @@ export default function CVInsight() {
                 } 
                 text-white`}
             >
-              {loading ? "Analyzing..." : "Analyze CV"}
+              {loading ? "Analyzing..." : "Upload CV"}
             </button>
           </form>
 
@@ -161,7 +162,7 @@ export default function CVInsight() {
           {response && (
             <div className="mt-8 p-6 bg-purple-500/10 border border-purple-500/20 rounded-lg">
               <h2 className="text-xl font-semibold text-white mb-4">
-                Analysis Results
+                Analysis Result
               </h2>
               <div className="text-purple-200 whitespace-pre-wrap">
                 {response}
@@ -169,7 +170,7 @@ export default function CVInsight() {
             </div>
           )}
           {showButton && (
-              <button onClick={handleParsing} className="mt-2 rounded-md bg-purple-600 hover:bg-purple-700 px-2 py-2">pdfParser</button>
+              <button onClick={handleParsing} className="mt-2 rounded-md bg-purple-600 hover:bg-purple-700 px-2 py-2">Start Analysis</button>
           )}
         </div>
       </div>

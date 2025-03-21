@@ -4,6 +4,7 @@ import prisma from "@/lib/db";
 import { auth } from "@/lib/auth";
 import pdfParse from "pdf-parse";
 import fetch from "node-fetch";
+import { geminiCalls } from "../gemini/gemini";
 
 
 export async function pdfParser() {
@@ -41,7 +42,9 @@ export async function pdfParser() {
         
         const entireContent=pdfData.text;
 
-        console.log("Extracted Text:", entireContent);
+        geminiCalls(entireContent);
+        
+        // console.log("Extracted Text by pdf parsing:", entireContent);
 
     } catch (error) {
         console.error("Error occurred:", error);
