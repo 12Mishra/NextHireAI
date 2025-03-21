@@ -3,16 +3,22 @@
 import axios from "axios";
 
 export async function createNewUser(name, email, password) {
+    console.log(name, email, password);
+    
     try {
-
-        const response = await axios.post("/api/auth/new-user", {
+        console.log("hiih");
+        
+        const response = await axios.post("http://localhost:3000/api/auth/new-user", {
             name,
             email,
             password,
         });
 
+        console.log(response);
+        
         console.log("Axios Response Data:", response.data); 
         return response.data; 
+
     } catch (error) {
 
         if (error.response) {

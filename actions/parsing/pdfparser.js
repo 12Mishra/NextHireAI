@@ -42,9 +42,10 @@ export async function pdfParser() {
         
         const entireContent=pdfData.text;
 
-        geminiCalls(entireContent);
+        const geminiResponse=await geminiCalls(entireContent);
         
         // console.log("Extracted Text by pdf parsing:", entireContent);
+        return {success:200, geminiResponse:geminiResponse}
 
     } catch (error) {
         console.error("Error occurred:", error);

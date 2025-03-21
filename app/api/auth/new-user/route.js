@@ -3,6 +3,8 @@ import  prisma  from "@/lib/db";
 import bcrypt from "bcryptjs";
 
 export async function POST(req) {
+    console.log(req.name, req.email, req.password);
+    
     try {
         console.log("route hit");
         
