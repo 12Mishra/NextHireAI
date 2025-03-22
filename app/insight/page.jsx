@@ -8,7 +8,7 @@ import { toast } from "react-toastify";
 import { pdfParser } from "@/actions/parsing/pdfparser";
 import Modal from "../_components/Modal";
 import { motion } from "framer-motion";
-import { FiUploadCloud, FiFileText, FiCheck } from 'react-icons/fi';
+import { FiUploadCloud, FiFileText, FiCheck } from "react-icons/fi";
 
 export default function CVInsight() {
   const { data: session, status } = useSession();
@@ -19,17 +19,15 @@ export default function CVInsight() {
   const [response, setResponse] = useState(null);
   const [error, setError] = useState(null);
   const [startButton, setStartButton] = useState(false);
-  const [showModal, setShowModal]=useState(false);
-  const [viewAnalysis, setViewAnalysis]=useState(false);
-  const [dataResponse, setDataResponse]=useState([]);
-  const [enable, setEnable]=useState(false);
-
+  const [showModal, setShowModal] = useState(false);
+  const [viewAnalysis, setViewAnalysis] = useState(false);
+  const [dataResponse, setDataResponse] = useState([]);
+  const [enable, setEnable] = useState(false);
 
   useEffect(() => {
     if (status === "loading") return;
-    if (!session) {
-      router.push("/auth/login");
-    }
+
+    if (!session) router.push("/auth/login");
   }, []);
 
   const computeSHA256 = async (file) => {
@@ -52,7 +50,7 @@ export default function CVInsight() {
       return;
     }
     console.log(file);
-    
+
     try {
       await toast.promise(
         (async () => {
@@ -65,7 +63,7 @@ export default function CVInsight() {
               file.name
             );
             console.log(response);
-          
+
             if (response.failure !== undefined) {
               throw new Error("Could not upload file");
             }
@@ -82,12 +80,11 @@ export default function CVInsight() {
 
             setEnable(true);
             console.log("File uploaded successfully!");
-          
-            return "File uploaded successfully!";
 
+            return "File uploaded successfully!";
           } catch (error) {
             console.error("Upload failed", error);
-            throw new Error("Upload failed. Please try again.");  
+            throw new Error("Upload failed. Please try again.");
           }
         })(),
         {
@@ -95,7 +92,6 @@ export default function CVInsight() {
           success: "File uploaded successfully!",
           error: "Upload failed. Please try again.",
         }
-        
       );
       setStartButton(true);
     } finally {
@@ -105,15 +101,15 @@ export default function CVInsight() {
 
   async function handleParsing() {
     toast.loading("Processing your resume... ⏳");
-  
+
     try {
       const pdfResponse = await pdfParser();
-  
+
       if (pdfResponse.success === 200) {
         toast.dismiss();
         toast.success("Analysis completed!");
-  
-        // const data = pdfResponse.body; 
+
+        // const data = pdfResponse.body;
         // setDataResponse(data);
         console.log(pdfResponse.geminiResponse.body);
         setDataResponse(pdfResponse.geminiResponse.body);
@@ -130,42 +126,42 @@ export default function CVInsight() {
     }
   }
 
-  function handleShowModal(){
+  function handleShowModal() {
     setShowModal(true);
   }
 
   // Animation variants
   const containerVariants = {
     hidden: { opacity: 0, y: 20 },
-    visible: { 
-      opacity: 1, 
+    visible: {
+      opacity: 1,
       y: 0,
-      transition: { duration: 0.6 }
-    }
+      transition: { duration: 0.6 },
+    },
   };
 
   const fadeInUp = {
     hidden: { opacity: 0, y: 20 },
-    visible: { 
-      opacity: 1, 
+    visible: {
+      opacity: 1,
       y: 0,
-      transition: { duration: 0.5 }
-    }
+      transition: { duration: 0.5 },
+    },
   };
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-black to-purple-900/20 p-8 pt-20">
-      <motion.div 
+      <motion.div
         className="max-w-4xl mx-auto"
         variants={containerVariants}
         initial="hidden"
         animate="visible"
       >
-        <motion.div 
+        <motion.div
           className="bg-black/40 p-8 rounded-2xl shadow-2xl border border-purple-500/20 backdrop-blur-md"
           variants={fadeInUp}
         >
-          <motion.h1 
+          <motion.h1
             className="text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-600 mb-8 text-center"
             initial={{ opacity: 0, y: -20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -175,7 +171,7 @@ export default function CVInsight() {
           </motion.h1>
 
           <form onSubmit={handleFileUpload} className="space-y-6">
-            <motion.div 
+            <motion.div
               className="border-2 border-dashed border-purple-500/30 rounded-2xl p-12 text-center transition-all duration-300 hover:border-purple-500/50 hover:bg-purple-500/5"
               whileHover={{ scale: 1.01 }}
               whileTap={{ scale: 0.99 }}
@@ -188,7 +184,7 @@ export default function CVInsight() {
                 onChange={(e) => setFile(e.target.files?.[0])}
               />
               <label htmlFor="cv-file" className="cursor-pointer block">
-                <motion.div 
+                <motion.div
                   className="space-y-4"
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
@@ -197,7 +193,9 @@ export default function CVInsight() {
                   {file ? (
                     <div className="flex flex-col items-center space-y-4">
                       <FiFileText className="w-12 h-12 text-purple-400" />
-                      <span className="text-purple-200 text-lg">Selected: {file.name}</span>
+                      <span className="text-purple-200 text-lg">
+                        Selected: {file.name}
+                      </span>
                       <FiCheck className="w-6 h-6 text-green-400" />
                     </div>
                   ) : (
@@ -219,9 +217,10 @@ export default function CVInsight() {
               type="submit"
               disabled={enable || !file || loading}
               className={`w-full py-4 rounded-xl transition-all duration-300 
-                ${loading || !file
-                  ? "bg-purple-600/50 cursor-not-allowed"
-                  : "bg-gradient-to-r from-purple-600 to-pink-600 hover:opacity-90"
+                ${
+                  loading || !file
+                    ? "bg-purple-600/50 cursor-not-allowed"
+                    : "bg-gradient-to-r from-purple-600 to-pink-600 hover:opacity-90"
                 } 
                 text-white font-semibold text-lg shadow-lg`}
               whileHover={{ scale: 1.02 }}
@@ -232,7 +231,11 @@ export default function CVInsight() {
                   <motion.div
                     className="w-5 h-5 border-2 border-white border-t-transparent rounded-full"
                     animate={{ rotate: 360 }}
-                    transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
+                    transition={{
+                      duration: 1,
+                      repeat: Infinity,
+                      ease: "linear",
+                    }}
                   />
                   <span>Processing...</span>
                 </div>
@@ -243,7 +246,7 @@ export default function CVInsight() {
           </form>
 
           {error && (
-            <motion.div 
+            <motion.div
               className="mt-6 p-4 bg-red-500/10 border border-red-500/20 rounded-xl"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -253,7 +256,7 @@ export default function CVInsight() {
           )}
 
           {response && (
-            <motion.div 
+            <motion.div
               className="mt-8 p-6 bg-purple-500/10 border border-purple-500/20 rounded-xl"
               variants={fadeInUp}
               initial="hidden"
@@ -270,7 +273,7 @@ export default function CVInsight() {
 
           <div className="flex gap-4 mt-6">
             {startButton && (
-              <motion.button 
+              <motion.button
                 onClick={handleParsing}
                 className="flex-1 py-3 rounded-xl bg-gradient-to-r from-purple-600 to-pink-600 text-white font-semibold hover:opacity-90 transition-all duration-300 shadow-lg"
                 whileHover={{ scale: 1.02 }}
@@ -279,9 +282,9 @@ export default function CVInsight() {
                 Start Analysis
               </motion.button>
             )}
-            
+
             {viewAnalysis && (
-              <motion.button 
+              <motion.button
                 onClick={handleShowModal}
                 className="flex-1 py-3 rounded-xl bg-gradient-to-r from-purple-600 to-pink-600 text-white font-semibold hover:opacity-90 transition-all duration-300 shadow-lg"
                 whileHover={{ scale: 1.02 }}
@@ -291,10 +294,18 @@ export default function CVInsight() {
               </motion.button>
             )}
           </div>
+          <button
+            className="flex-1 rounded-xl bg-purple-500 text-white font-semibold hover:opacity-90 transition-all duration-300 shadow-lg px-2 py-2 "
+            onClick={() => {
+              router.push("/past-insights");
+            }}
+          >
+            View your past analysis
+          </button>
         </motion.div>
 
         {showModal && (
-          <Modal setShowModal={setShowModal} dataResponse={dataResponse}/>
+          <Modal setShowModal={setShowModal} dataResponse={dataResponse} />
         )}
       </motion.div>
     </div>

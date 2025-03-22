@@ -4,33 +4,30 @@ import { NextResponse } from "next/server";
 
 export async function GET() {
     const session = await auth();
-
-    //db call to fetch the insights
     console.log(session?.user?.id);
 
-    const analysis = await prisma.pastInsights.findFirst({
+    const analysis = await prisma.pastInsights.findMany({
         where: {
             userId: parseInt(session.user.id)
         }
-    })
+    });
 
-    const analysisFile = await prisma.files.findFirst({
-        where: {
-            id: analysis.fileId
-        }
-    })
-
-    console.log(JSON.stringify(analysis, null, 2));
-    console.log(analysisFile.fileURL);
-
-
-    if (!analysis) {
-        return NextResponse.json({ error: 'Could not find past insights of user' }, { status: 404 })
-
+    if (!analysis || analysis.length === 0) {
+        return NextResponse.json({ error: "Could not find past insights of user" }, { status: 404 });
     }
 
-    return NextResponse.json(
-        { body: analysis.insights, fileurl: analysisFile.fileURL || null, createdAt:analysis.createdAt},
-        { status: 200 }
-    );
+    const fileIds = analysis.map((insight) => insight.fileId); 
+    const analysisFiles = await prisma.files.findMany({
+        where: {
+            id: { in: fileIds } 
+        }
+    });
+
+    const response = analysis.map((insight) => ({
+        insights: insight.insights,
+        createdAt: insight.createdAt,
+        fileUrl: analysisFiles.find((file) => file.id === insight.fileId)?.fileURL || null
+    }));
+
+    return NextResponse.json(response, { status: 200 });
 }
