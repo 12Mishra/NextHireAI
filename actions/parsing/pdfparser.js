@@ -26,10 +26,10 @@ export async function pdfParser() {
         }
 
         const pdfUrl = foundFile.fileURL;
-        console.log("PDF URL:", pdfUrl);
+        // console.log("PDF URL:", pdfUrl);
 
         const response = await fetch(pdfUrl);
-        console.log(response);
+        // console.log(response);
         
         if (!response.ok) {
             throw new Error(`Failed to fetch PDF: ${response.statusText}`);

@@ -49,7 +49,6 @@ const Hero = () => {
             ))}
           </motion.div>
 
-          {/* CTA Buttons */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -63,7 +62,7 @@ const Hero = () => {
               Analyze Your Resume
             </Link>
             <Link
-              href="/about"
+              href="/"
               className="px-8 py-3 rounded-lg border border-purple-500/20 text-white hover:bg-purple-500/10 transition-colors"
             >
               Learn More
@@ -72,13 +71,11 @@ const Hero = () => {
         </motion.div>
       </div>
 
-      {/* Decorative element */}
       <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-purple-500 to-transparent"></div>
     </div>
   );
 };
 
-// Feature icons and data
 const features = [
   {
     icon: ({ className }) => (

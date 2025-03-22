@@ -11,6 +11,9 @@ import { motion } from "framer-motion";
 import { FiUploadCloud, FiFileText, FiCheck } from 'react-icons/fi';
 
 export default function CVInsight() {
+  const { data: session, status } = useSession();
+  const router = useRouter();
+
   const [file, setFile] = useState(null);
   const [loading, setLoading] = useState(false);
   const [response, setResponse] = useState(null);
@@ -21,8 +24,6 @@ export default function CVInsight() {
   const [dataResponse, setDataResponse]=useState([]);
   const [enable, setEnable]=useState(false);
 
-  const router = useRouter();
-  const { data: session, status } = useSession();
 
   useEffect(() => {
     if (status === "loading") return;
@@ -101,7 +102,6 @@ export default function CVInsight() {
       setLoading(false);
     }
   }
-
 
   async function handleParsing() {
     toast.loading("Processing your resume... ⏳");

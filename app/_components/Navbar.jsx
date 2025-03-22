@@ -6,9 +6,10 @@ import { useEffect } from "react";
 
 export default function Navbar() {
   const { data: session, status } = useSession();
+
   useEffect(()=>{
     if(status==="loading") return;
-  },[])
+  },[session])
 
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 backdrop-blur-md border-b border-purple-500/20">

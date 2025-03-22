@@ -14,22 +14,39 @@ datasource db {
 }
 
 model User {
-  id        Int      @id @default(autoincrement())  
-  name      String  
-  email     String   @unique  
-  password  String  
-  files     Files[]  
-  createdAt DateTime @default(now())  
+  id           Int            @id @default(autoincrement())
+  name         String
+  email        String         @unique
+  password     String
+  files        Files[]
+  createdAt    DateTime       @default(now())
+  PastInsights PastInsights[]
 }
 
 model Files {
-  id        Int      @id @default(autoincrement())  
-  fileName  String 
-  fileURL   String  
-  fileSize  Float  
-  userId    Int     
-  user      User     @relation(fields: [userId], references: [id])  
-  createdAt DateTime @default(now())  
+  id           Int            @id @default(autoincrement())
+  fileName     String
+  fileURL      String
+  fileSize     Float
+  userId       Int
+  user         User           @relation(fields: [userId], references: [id])
+  createdAt    DateTime       @default(now())
+  PastInsights PastInsights[]
 
-  @@index([userId]) 
+  @@index([userId])
 }
+
+model PastInsights {
+  id        Int      @id @default(autoincrement())
+  insights  Json
+  userId    Int
+  fileId    Int 
+  user      User     @relation(fields: [userId], references: [id])
+  files     Files    @relation(fields: [fileId], references: [id])
+  createdAt DateTime @default(now())
+
+  @@index([userId])
+  @@index([fileId])
+}
+
+
