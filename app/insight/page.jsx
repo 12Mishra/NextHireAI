@@ -23,6 +23,7 @@ export default function CVInsight() {
   const [viewAnalysis, setViewAnalysis] = useState(false);
   const [dataResponse, setDataResponse] = useState([]);
   const [enable, setEnable] = useState(false);
+  const [isProcessing, setIsProcessing] = useState(false);
 
   useEffect(() => {
     if (status === "loading") return;
@@ -100,6 +101,7 @@ export default function CVInsight() {
   }
 
   async function handleParsing() {
+    setIsProcessing(true);
     toast.loading("Processing your resume... ⏳");
 
     try {
@@ -109,8 +111,6 @@ export default function CVInsight() {
         toast.dismiss();
         toast.success("Analysis completed!");
 
-        // const data = pdfResponse.body;
-        // setDataResponse(data);
         console.log(pdfResponse.geminiResponse.body);
         setDataResponse(pdfResponse.geminiResponse.body);
 
@@ -123,6 +123,8 @@ export default function CVInsight() {
       toast.dismiss();
       toast.error("Something went wrong! ❌");
       console.error("Error in handleParsing:", error);
+    } finally {
+      setIsProcessing(false);
     }
   }
 
@@ -215,10 +217,10 @@ export default function CVInsight() {
 
             <motion.button
               type="submit"
-              disabled={enable || !file || loading}
+              disabled={enable || !file || loading || isProcessing}
               className={`w-full py-4 rounded-xl transition-all duration-300 
                 ${
-                  loading || !file
+                  loading || !file || isProcessing
                     ? "bg-purple-600/50 cursor-not-allowed"
                     : "bg-gradient-to-r from-purple-600 to-pink-600 hover:opacity-90"
                 } 
@@ -275,18 +277,28 @@ export default function CVInsight() {
             {startButton && (
               <motion.button
                 onClick={handleParsing}
-                className="flex-1 py-3 rounded-xl bg-gradient-to-r from-purple-600 to-pink-600 text-white font-semibold hover:opacity-90 transition-all duration-300 shadow-lg mb-4"
+                disabled={isProcessing}
+                className={`flex-1 py-3 rounded-xl ${
+                  isProcessing
+                    ? "bg-purple-600/50 cursor-not-allowed"
+                    : "bg-gradient-to-r from-purple-600 to-pink-600 hover:opacity-90"
+                } text-white font-semibold transition-all duration-300 shadow-lg mb-4`}
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
               >
-                Start Analysis
+                {isProcessing ? "Processing..." : "Start Analysis"}
               </motion.button>
             )}
 
             {viewAnalysis && (
               <motion.button
                 onClick={handleShowModal}
-                className="flex-1 py-3 rounded-xl bg-gradient-to-r from-purple-600 to-pink-600 text-white font-semibold hover:opacity-90 transition-all duration-300 shadow-lg mb-3"
+                disabled={isProcessing}
+                className={`flex-1 py-3 rounded-xl ${
+                  isProcessing
+                    ? "bg-purple-600/50 cursor-not-allowed"
+                    : "bg-gradient-to-r from-purple-600 to-pink-600 hover:opacity-90"
+                } text-white font-semibold transition-all duration-300 shadow-lg mb-3`}
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
               >
@@ -295,10 +307,15 @@ export default function CVInsight() {
             )}
           </div>
           <button
-            className="flex-1 rounded-xl bg-purple-900 text-white font-semibold hover:opacity-90 transition-all duration-300 shadow-lg px-2 py-3"
+            className={`flex-1 rounded-xl ${
+              isProcessing
+                ? "bg-purple-900/50 cursor-not-allowed"
+                : "bg-purple-900 hover:opacity-90"
+            } text-white font-semibold transition-all duration-300 shadow-lg px-2 py-3`}
             onClick={() => {
               router.push("/past-insights");
             }}
+            disabled={isProcessing}
           >
             View your past analysis
           </button>
