@@ -1,7 +1,7 @@
 "use client";
 import { useState, useEffect } from "react";
 import axios from "axios";
-import Modal from "../_components/Modal";
+import Modal from "../../components/Modal";
 import { motion } from "framer-motion";
 import { FiClock, FiFileText, FiArrowRight } from "react-icons/fi";
 import { useSession } from "next-auth/react";
@@ -21,7 +21,7 @@ export default function PastInsights() {
     if (status === "loading") return;
 
     if (!session) router.push("/auth/login");
-  }, []);
+  }, [session]);
 
   useEffect(() => {
     const fetchInsights = async () => {

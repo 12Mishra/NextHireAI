@@ -6,7 +6,7 @@ import axios from "axios";
 import { getSignedURL } from "@/actions/upload/upload";
 import { toast } from "react-toastify";
 import { pdfParser } from "@/actions/parsing/pdfparser";
-import Modal from "../_components/Modal";
+import Modal from "../../components/Modal";
 import { motion } from "framer-motion";
 import { FiUploadCloud, FiFileText, FiCheck } from "react-icons/fi";
 
@@ -28,7 +28,7 @@ export default function CVInsight() {
     if (status === "loading") return;
 
     if (!session) router.push("/auth/login");
-  }, []);
+  }, [session]);
 
   const computeSHA256 = async (file) => {
     const buffer = await file.arrayBuffer();
@@ -275,7 +275,7 @@ export default function CVInsight() {
             {startButton && (
               <motion.button
                 onClick={handleParsing}
-                className="flex-1 py-3 rounded-xl bg-gradient-to-r from-purple-600 to-pink-600 text-white font-semibold hover:opacity-90 transition-all duration-300 shadow-lg"
+                className="flex-1 py-3 rounded-xl bg-gradient-to-r from-purple-600 to-pink-600 text-white font-semibold hover:opacity-90 transition-all duration-300 shadow-lg mb-4"
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
               >
@@ -286,7 +286,7 @@ export default function CVInsight() {
             {viewAnalysis && (
               <motion.button
                 onClick={handleShowModal}
-                className="flex-1 py-3 rounded-xl bg-gradient-to-r from-purple-600 to-pink-600 text-white font-semibold hover:opacity-90 transition-all duration-300 shadow-lg"
+                className="flex-1 py-3 rounded-xl bg-gradient-to-r from-purple-600 to-pink-600 text-white font-semibold hover:opacity-90 transition-all duration-300 shadow-lg mb-3"
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
               >
@@ -295,7 +295,7 @@ export default function CVInsight() {
             )}
           </div>
           <button
-            className="flex-1 rounded-xl bg-purple-500 text-white font-semibold hover:opacity-90 transition-all duration-300 shadow-lg px-2 py-2 "
+            className="flex-1 rounded-xl bg-purple-900 text-white font-semibold hover:opacity-90 transition-all duration-300 shadow-lg px-2 py-3"
             onClick={() => {
               router.push("/past-insights");
             }}

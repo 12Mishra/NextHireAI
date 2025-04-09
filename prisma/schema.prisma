@@ -29,7 +29,7 @@ model Files {
   fileURL      String
   fileSize     Float
   userId       Int
-  user         User           @relation(fields: [userId], references: [id])
+  user         User           @relation(fields: [userId], references: [id], onDelete: Cascade)
   createdAt    DateTime       @default(now())
   PastInsights PastInsights[]
 
@@ -41,8 +41,8 @@ model PastInsights {
   insights  Json
   userId    Int
   fileId    Int 
-  user      User     @relation(fields: [userId], references: [id])
-  files     Files    @relation(fields: [fileId], references: [id])
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  files     Files    @relation(fields: [fileId], references: [id], onDelete: Cascade)
   createdAt DateTime @default(now())
 
   @@index([userId])
