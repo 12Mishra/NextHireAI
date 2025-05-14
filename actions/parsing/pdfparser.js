@@ -26,10 +26,10 @@ export async function pdfParser() {
         }
 
         const pdfUrl = foundFile.fileURL;
-        // console.log("PDF URL:", pdfUrl);
+        console.log("PDF URL:", pdfUrl);
 
         const response = await fetch(pdfUrl);
-        // console.log(response);
+        console.log(response);
         
         if (!response.ok) {
             throw new Error(`Failed to fetch PDF: ${response.statusText}`);
@@ -42,9 +42,11 @@ export async function pdfParser() {
         
         const entireContent=pdfData.text;
 
+        console.log(entireContent);
+        
         const geminiResponse=await geminiCalls(entireContent);
         
-        // console.log("Extracted Text by pdf parsing:", entireContent);
+        console.log("Extracted Text by pdf parsing:", entireContent);
         return {success:200, geminiResponse:geminiResponse}
 
     } catch (error) {

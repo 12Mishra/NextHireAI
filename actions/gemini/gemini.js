@@ -44,6 +44,8 @@ export async function geminiCalls(entireContent) {
         .replace(/\n?```/, "") // Remove closing ```
         .trim(); // Remove extra whitespace
 
+    console.log("Refined data: ", refinedData);
+
     try {
         // Parse the cleaned response into a JSON object
         const parsedData = JSON.parse(refinedData);
@@ -63,21 +65,21 @@ export async function geminiCalls(entireContent) {
             orderBy: { createdAt: 'desc' }
         });
 
-        console.log(foundFile); 
-        
+        console.log(foundFile);
+
         if (!foundFile) {
             throw new Error("No file found for this user.");
         }
 
         // Create new past insight
-        const newInsight = await prisma.pastInsights.create({  
-            data: {  
-                insights: parsedData,  
+        const newInsight = await prisma.pastInsights.create({
+            data: {
+                insights: parsedData,
                 userId: parseInt(session.user.id),
-                fileId: foundFile.id  
+                fileId: foundFile.id
             }
         });
-        
+
 
         console.log(newInsight);
 
