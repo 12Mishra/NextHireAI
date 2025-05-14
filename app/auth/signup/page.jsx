@@ -17,7 +17,6 @@ export default function Signup() {
 
     try {
       const response = await createNewUser(name, email, password);
-      console.log(response);
       
       if (response?.success) {
         router.push("/auth/login");

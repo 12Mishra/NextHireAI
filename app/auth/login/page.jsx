@@ -20,10 +20,9 @@ export default function Login() {
         password,
         redirect: false,
       });
-      console.log(response);
-      if (response.status===200) {
+      if (response.status === 200) {
         toast.success("Successfully logged in.");
-        router.push('/insight');
+        router.push("/insight");
       } else {
         toast.error("Error loggin in user");
       }

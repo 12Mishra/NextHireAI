@@ -1,34 +1,42 @@
-"use server"
+"use server";
 
-import axios from "axios";
+import prisma from "@/lib/db";
+import bcrypt from "bcryptjs";
 
 export async function createNewUser(name, email, password) {
     console.log(name, email, password);
-    
+
     try {
-        console.log("hiih");
-        
-        const response = await axios.post("http://localhost:3000/api/auth/new-user", {
-            name,
-            email,
-            password,
+        const existingUser = await prisma.user.findUnique({
+            where: { email },
         });
 
-        console.log(response);
-        
-        console.log("Axios Response Data:", response.data); 
-        return response.data; 
-
-    } catch (error) {
-
-        if (error.response) {
-            console.error("Server Response Data:", error.response.data);
-            console.error("Status Code:", error.response.status);
+        if (existingUser) {
+            return {
+                success: false,
+                message: "User already exists",
+            };
         }
 
+        const hashedPassword = await bcrypt.hash(password, 10);
+
+        await prisma.user.create({
+            data: {
+                name,
+                email,
+                password: hashedPassword,
+            },
+        });
+
+        return {
+            success: true,
+            message: "User created successfully",
+        };
+    } catch (error) {
+        console.error("Error creating user:", error);
         return {
             success: false,
-            message: error.response?.data?.message || "Error occurred while creating user",
+            message: "Internal Server Error",
         };
     }
 }
