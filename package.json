@@ -12,7 +12,7 @@
     "@aws-sdk/client-s3": "^3.758.0",
     "@aws-sdk/s3-request-presigner": "^3.758.0",
     "@google/generative-ai": "^0.24.0",
-    "@prisma/client": "^6.5.0",
+    "@prisma/client": "^6.7.0",
     "axios": "^1.8.3",
     "bcryptjs": "^3.0.2",
     "motion": "^12.5.0",

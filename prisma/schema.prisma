@@ -1,9 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -18,8 +12,8 @@ model User {
   name         String
   email        String         @unique
   password     String
-  files        Files[]
   createdAt    DateTime       @default(now())
+  files        Files[]
   PastInsights PastInsights[]
 }
 
@@ -29,8 +23,8 @@ model Files {
   fileURL      String
   fileSize     Float
   userId       Int
-  user         User           @relation(fields: [userId], references: [id], onDelete: Cascade)
   createdAt    DateTime       @default(now())
+  user         User           @relation(fields: [userId], references: [id], onDelete: Cascade)
   PastInsights PastInsights[]
 
   @@index([userId])
@@ -40,13 +34,11 @@ model PastInsights {
   id        Int      @id @default(autoincrement())
   insights  Json
   userId    Int
-  fileId    Int 
-  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  files     Files    @relation(fields: [fileId], references: [id], onDelete: Cascade)
+  fileId    Int
   createdAt DateTime @default(now())
+  files     Files    @relation(fields: [fileId], references: [id], onDelete: Cascade)
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@index([userId])
   @@index([fileId])
 }
-
-
