@@ -1,7 +1,6 @@
 "use client";
 import { useRouter } from "next/navigation";
 import { useState, useEffect } from "react";
-import { useSession } from "next-auth/react";
 import axios from "axios";
 import { getSignedURL } from "@/actions/upload/upload";
 import { toast } from "react-toastify";
@@ -11,7 +10,7 @@ import { motion } from "framer-motion";
 import { FiUploadCloud, FiFileText, FiCheck } from "react-icons/fi";
 
 export default function CVInsight() {
-  const { data: session, status } = useSession();
+  // const { data: session, status } = useSession();
   const router = useRouter();
 
   const [file, setFile] = useState(null);
@@ -25,11 +24,11 @@ export default function CVInsight() {
   const [enable, setEnable] = useState(false);
   const [isProcessing, setIsProcessing] = useState(false);
 
-  useEffect(() => {
-    if (status === "loading") return;
+  // useEffect(() => {
+  //   if (status === "loading") return;
 
-    if (!session) router.push("/auth/login");
-  }, [session]);
+  //   if (!session) router.push("/auth/login");
+  // }, [session]);
 
   const computeSHA256 = async (file) => {
     const buffer = await file.arrayBuffer();

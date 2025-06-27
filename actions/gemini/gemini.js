@@ -11,7 +11,7 @@ export async function geminiCalls(entireContent) {
     const genAI = new GoogleGenerativeAI(process.env.NEXT_GEMINI_API_KEY);
     // console.log(entireContent);
 
-    const model = genAI.getGenerativeModel({ model: process.env.NEXT_GEMINI_MODEL });
+    const model = genAI.getGenerativeModel({ model: process.env.NEXT_GEMINI_MODEL  });
     const prompt = getExtractionPrompt(entireContent);
     // console.log("The prompt is: \n ",prompt);
 
@@ -31,7 +31,7 @@ export async function geminiCalls(entireContent) {
     // }
 
     // Second prompt: Career roadmap using extracted JSON
-    const newModel = genAI.getGenerativeModel({ model: process.env.NEXT_GEMINI_TUNED_MODEL });
+    const newModel = genAI.getGenerativeModel({ model: process.env.NEXT_GEMINI_MODEL });
 
     const career_prompt = getCareerRoadmapPrompt(extractedText);
     const newResult = await newModel.generateContent(career_prompt);
