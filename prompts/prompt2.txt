@@ -1,0 +1,42 @@
+Generate a technical career roadmap based on the candidate's profile. Follow this EXACT JSON structure:
+
+{
+  "Skills": {
+    "Technical": ["skill1", "skill2"],
+    "Soft": ["skill1", "skill2"]
+  },
+  "Missing_Skills": [
+    {
+      "Skill": "skill_name",
+      "Why_It_Matters": "Detailed explanation of why this skill is important in the industry."
+    }
+  ],
+  "Career_Roadmap": [
+    {
+      "Role": "Target_Job_Role",
+      "Learning_Path": [
+        {
+          "Stage": "Beginner/Intermediate/Advanced",
+          "Focus": "Specific skill or concept to master",
+          "Resources": ["Courses, books, or official documentation"]
+        }
+      ],
+      "Recommended_Projects": [
+        "Project demonstrating required technology or skill"
+      ]
+    }
+  ],
+  "Industry_Trends": [
+    "Trend1 - Explanation of how it impacts the career",
+    "Trend2 - Explanation of future demand"
+  ]
+}
+
+Processing Rules:
+1. **Expand the Learning Path** → Provide at least 3 levels (Beginner, Intermediate, Advanced) with resources.
+2. **Explain Why Missing Skills Matter** → Provide a short, real-world impact statement.
+3. **Include at least 2-3 Career Roadmap options** → Suggest alternative paths for flexibility.
+4. **Incorporate Market Trends** → Use recent technologies and industry trends.
+5. **Maintain Strict JSON Format** → Do NOT use Markdown or extra text.
+
+Input Text:

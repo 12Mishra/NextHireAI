@@ -1,0 +1,30 @@
+Extract ONLY these fields in EXACT order: [Name, Education, CGPA, Technical Skills, Projects, Soft Skills, Achievements]
+Formatting rules:
+1. Use Field: Value format with colons
+2. For multi-value fields:
+   - Skills: Comma-separated (Python, Team Leadership)
+   - Projects: Hyphen bullets (no numbering)
+3. Omit fields with no data
+4. Never add explanations/markdown
+5. Follow this template:
+Name: [Full Name]
+Education: [Degree], [University]
+CGPA: [Number]
+Technical Skills: [Skill1], [Skill2]
+Projects:
+- [Project Title]
+- [Project Description]
+Soft Skills: [Skill1], [Skill2]
+Achievements: [Achievement1], [Achievement2]
+Processing rules:
+1. Convert job responsibilities → Projects if no explicit projects
+2. Certifications → Achievements
+3. Merge similar skills (e.g., "Python/Pandas" → Python)
+4. Omit dates/locations/contact info
+5. Remove ALL non-requested fields
+6. STRICTLY PROHIBITED:
+   - Summaries/analysis ("This_resume_shows...")
+   - Formatting suggestions
+   - Ratings/opinions
+   - Career advice
+Input text:
