@@ -1,7 +1,7 @@
 {
   "functions": {
     "app/**": {
-      "includeFiles": "prompts/**"
+      "includeFiles": "prompts/*.txt"
     }
   }
 }
